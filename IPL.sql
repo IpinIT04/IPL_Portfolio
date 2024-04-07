@@ -117,6 +117,7 @@ on T1.id = T2.id
 where dismisal_kind in ('caught', 'caught and bowled', 'bowled', 'hit wicket', 'lbw', 'stumped')
 group by season, bowler
 )
+	
 
 
 -- Economy Rate for bowlers
@@ -136,6 +137,7 @@ from Economy_Rate_for_Bowlers
 order by season
 
 
+	
 -- Average Bowlers
 create view Runs as (
 select 
@@ -147,7 +149,6 @@ join dbo.ipl_ball_by_ball_2008_2022 T2
 on T1.id = T2.id
 group by season, bowler
 )
-
 select W.season, W.bowler, Total_Wickets, Total_Runs, cast(Total_Runs as float) / nullif(Total_Wickets, 0) as AVG_Bowler
 from Wickets W
 join Runs R
@@ -155,6 +156,7 @@ on W.season = R.season and W.bowler = R.bowler
 order by 1
 
 
+	
 -- Strike Rate of Bowlers
 create view Num_of_Balls as (
 	select 
@@ -166,7 +168,6 @@ create view Num_of_Balls as (
 	on T1.id = T2.id
 	group by season, bowler
 )
-
 select W.season, W.bowler, Ball_Bowled, Total_Wickets, cast(Ball_Bowled as float) / nullif(Total_Wickets, 0) as Bowler_RS
 from Wickets W
 join Num_of_Balls NB
